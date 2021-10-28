@@ -28,12 +28,12 @@ RUN apt-get update -y && apt-get install -y  \
 
 #copy gym-duckietown to container
 WORKDIR /gym-duckietown
-COPY gym-duckietown/. gym-duckietown
+COPY gym-duckietown/. .
 
+WORKDIR /gym-duckietown/src
 RUN pip3 install pyglet==1.5.15
-
-WORKDIR /src/gym_duckietown
-RUN python3 -c "import *"
+#RUN python3 --version
+RUN python3 -c "from gym_duckietown import *"
 
 #----NOTE for me-------
 #workdir: changes folder in the dockercontainer
