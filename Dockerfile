@@ -1,4 +1,4 @@
-FROM nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
+FROM nvidia/cuda:11.4.2-cudnn8-runtime-ubuntu20.04
 
 # to skip questions/dialogs during apt-get install
 ARG DEBIAN_FRONTEND=noninteractive
@@ -19,12 +19,14 @@ CMD ["/usr/sbin/sshd","-D"]
 #https://github.com/duckietown/gym-duckietown/blob/daffy/docker/standalone/Dockerfile
 RUN apt-get update -y && apt-get install -y  \
     freeglut3-dev \
+    python3.6 \
     python3-pip \
     python3-numpy \
     python3-scipy \
     wget curl vim git \
     && \
     rm -rf /var/lib/apt/lists/*
+    
 
 #copy gym-duckietown to container
 WORKDIR /gym-duckietown
@@ -32,8 +34,8 @@ COPY gym-duckietown/. .
 
 WORKDIR /gym-duckietown/src
 RUN pip3 install pyglet==1.5.15
-#RUN python3 --version
-RUN python3 -c "from gym_duckietown import *"
+RUN python3 --version
+#RUN python3 -c "from gym_duckietown import *"
 
 #----NOTE for me-------
 #workdir: changes folder in the dockercontainer
