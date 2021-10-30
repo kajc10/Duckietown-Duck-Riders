@@ -24,15 +24,17 @@ RUN apt-get update -y && apt-get install -y  \
     python3-numpy \
     python3-scipy \
     wget curl vim git \
+    nano \
+    xvfb \
     && \
     rm -rf /var/lib/apt/lists/*
     
 
 #copy gym-duckietown to container
-WORKDIR /gym-duckietown
+WORKDIR /home/duckie/gym-duckietown
 COPY gym-duckietown/. .
 
-WORKDIR /gym-duckietown/src
+#WORKDIR /gym-duckietown/src
 RUN pip3 install pyglet==1.5.15
 RUN python3 --version
 #RUN python3 -c "from gym_duckietown import *"
@@ -40,3 +42,8 @@ RUN python3 --version
 #----NOTE for me-------
 #workdir: changes folder in the dockercontainer
 #copy : COPY <src-path(host)> <destination-path (dockercontainer)>
+
+
+#git clone https://github.com/duckietown/gym-duckietown.git
+#cd gym-duckietown
+#conda env create -f environment.yaml    = yaml FILEBOL LETREHOZTA   ott van a name: gym-duckietown
