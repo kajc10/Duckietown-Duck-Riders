@@ -27,7 +27,7 @@ RUN apt-get update -y && apt-get install -y  \
     && \
     rm -rf /var/lib/apt/lists/*
     
-#copy gym-duckietown to container
+#copy gym-duckietown to container   |  #git clone https://github.com/duckietown/gym-duckietown.git #cd gym-duckietown
 WORKDIR /home/duckie/gym-duckietown
 COPY gym-duckietown/. .
 
@@ -39,7 +39,3 @@ RUN python3 --version
 #----NOTE for me-------
 #workdir: changes folder in the dockercontainer
 #copy : COPY <src-path(host)> <destination-path (dockercontainer)>
-
-#git clone https://github.com/duckietown/gym-duckietown.git
-#cd gym-duckietown
-
