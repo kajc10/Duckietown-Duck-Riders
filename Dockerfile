@@ -3,7 +3,6 @@ FROM nvidia/cuda:11.4.2-cudnn8-runtime-ubuntu20.04
 # to skip questions/dialogs during apt-get install
 ARG DEBIAN_FRONTEND=noninteractive
 
-
 #dockerizing ssh https://dev.to/s1ntaxe770r/how-to-setup-ssh-within-a-docker-container-i5i
 #create a user called duckie and add it to the sudo group; sets the password for the user duckie to duckduck
 #start the ssh service and listens on port 22 
@@ -14,7 +13,6 @@ RUN echo 'root:duckduck' | chpasswd
 RUN service ssh start
 EXPOSE 22
 CMD ["/usr/sbin/sshd","-D"]
-
 
 #https://github.com/duckietown/gym-duckietown/blob/daffy/docker/standalone/Dockerfile
 RUN apt-get update -y && apt-get install -y  \
@@ -29,7 +27,6 @@ RUN apt-get update -y && apt-get install -y  \
     && \
     rm -rf /var/lib/apt/lists/*
     
-
 #copy gym-duckietown to container
 WORKDIR /home/duckie/gym-duckietown
 COPY gym-duckietown/. .
@@ -43,7 +40,6 @@ RUN python3 --version
 #workdir: changes folder in the dockercontainer
 #copy : COPY <src-path(host)> <destination-path (dockercontainer)>
 
-
 #git clone https://github.com/duckietown/gym-duckietown.git
 #cd gym-duckietown
-#conda env create -f environment.yaml    = yaml FILEBOL LETREHOZTA   ott van a name: gym-duckietown
+
