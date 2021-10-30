@@ -33,7 +33,6 @@ WORKDIR /home/duckie/gym-duckietown
 COPY gym-duckietown/. .
 RUN pip3 install -e .
 
-#WORKDIR /gym-duckietown/src
 RUN pip3 install pyglet==1.5.15
 RUN pip3 install py-multihash==0.2.0
 RUN pip3 install pillow==8.3.2
