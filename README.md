@@ -41,3 +41,8 @@ To run the image:
 ```bash
 docker run -it duck-riders bash
 ```
+To run manual control (as described before) :
+```bash
+Xvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset &> xvfb.log & export DISPLAY=:0
+python3 manual_control.py --env-name Duckietown-udem1-v0
+```
