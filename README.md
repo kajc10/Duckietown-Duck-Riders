@@ -30,7 +30,7 @@ python3 manual_control.py --env-name Duckietown-udem1-v0
 ```
 <br>
 
-**Opton3: build docker image from Dockerfile**
+**Option3: build docker image from Dockerfile**
 <br>Commands:
 ```bash
 git clone https://github.com/kajc10/Duckietown-Duck-Riders
