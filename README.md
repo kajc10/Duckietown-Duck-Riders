@@ -4,7 +4,7 @@ This repository contains our group project for course VITMAV45.
 ## Milestone 1 : run manual_control.py
 
 **Option1: clone this repository and run manually**
-Note that several dependencies need to be installed on your system:<br> [Python 3.6+, OpenAI gym, NumPy, Pyglet, PyYAML,cloudpickle, PyTorch]
+<br> Note that several dependencies need to be installed on your system:<br> [Python 3.6+, OpenAI gym, NumPy, Pyglet, PyYAML,cloudpickle, PyTorch]
 
 Commands:
 ```bash
