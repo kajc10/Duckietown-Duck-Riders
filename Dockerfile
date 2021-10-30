@@ -24,6 +24,7 @@ RUN apt-get update -y && apt-get install -y  \
     wget curl vim git \
     nano \
     xvfb \
+    libfontconfig1 \
     && \
     rm -rf /var/lib/apt/lists/*
     
@@ -34,6 +35,10 @@ RUN pip3 install -e .
 
 #WORKDIR /gym-duckietown/src
 RUN pip3 install pyglet==1.5.15
+RUN pip3 install py-multihash==0.2.0
+RUN pip3 install pillow==8.3.2
+RUN pip3 install numpy==1.18.0
+
 RUN python3 --version
 #RUN python3 -c "from gym_duckietown import *"
 
