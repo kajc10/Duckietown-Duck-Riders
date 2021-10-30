@@ -5,7 +5,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 #dockerizing ssh https://dev.to/s1ntaxe770r/how-to-setup-ssh-within-a-docker-container-i5i
 #create a user called duckie and add it to the sudo group; sets the password for the user duckie to duckduck
-#start the ssh service and listens on port 22 
+#start the ssh service and listen on port 22 
 RUN apt update && apt install  openssh-server sudo -y
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 duckie  
 RUN  echo 'duckie:duckduck' | chpasswd
