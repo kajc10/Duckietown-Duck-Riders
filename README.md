@@ -4,7 +4,7 @@ This repository contains our group project for course VITMAV45.
 ## Milestone 1 : run manual_control.py
 
 **Option1: clone this repository and run manually**
-<br> Note that several dependencies need to be installed on your system:<br> [Python 3.6+, OpenAI gym, NumPy, Pyglet, PyYAML,cloudpickle, PyTorch]
+<br>Note that several dependencies need to be installed on your system:<br> [Python 3.6+, OpenAI gym, NumPy, Pyglet, PyYAML,cloudpickle, PyTorch]
 
 Commands:
 ```bash
@@ -32,7 +32,7 @@ python3 manual_control.py --env-name Duckietown-udem1-v0
 <br>
 
 **Opton3: build docker image from Dockerfile**
-Commands:
+<br>Commands:
 ```bash
 git clone https://github.com/kajc10/Duckietown-Duck-Riders
 cd Duckietown-Duck-Riders
