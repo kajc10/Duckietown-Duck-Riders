@@ -30,6 +30,7 @@ RUN apt-get update -y && apt-get install -y  \
 #copy gym-duckietown to container   |  #git clone https://github.com/duckietown/gym-duckietown.git #cd gym-duckietown
 WORKDIR /home/duckie/gym-duckietown
 COPY gym-duckietown/. .
+RUN pip3 install -e gym-duckietown
 
 #WORKDIR /gym-duckietown/src
 RUN pip3 install pyglet==1.5.15
