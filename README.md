@@ -73,7 +73,7 @@ python3 copy_custom_maps.py
 
 When starting the manual control script, the map can be selected via the `--map-name` option, e.g.:
 ```bash
-python3 manual_control.py --env-name Duckietown-udem1-v0 --map-name YOURMAPNAME
+python3 manual_control.py --env-name Duckietown-udem1-v0 --map-name rider_map
 ```
 Make sure you pass only the name, the .yaml extension is not needed!
 
