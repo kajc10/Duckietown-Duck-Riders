@@ -28,7 +28,7 @@ RUN apt-get update -y && apt-get install -y  \
     && \
     rm -rf /var/lib/apt/lists/*
     
-#copy gym-duckietown to container   |  #git clone https://github.com/duckietown/gym-duckietown.git #cd gym-duckietown
+#copy gym-duckietown and maps to container   |  #git clone https://github.com/duckietown/gym-duckietown.git #cd gym-duckietown
 WORKDIR /home/duckie
 COPY gym-duckietown/. gym-duckietown
 COPY maps/. maps
