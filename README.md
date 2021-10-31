@@ -59,11 +59,20 @@ After placing your map into the [/maps](/maps) folder, you can carry out the cop
 ```bash
 python3 copy_custom_maps.py
 ```
- It copies all .yaml files from the folder to the destinations.
+ It copies all .yaml files from the folder to the destinations. Note that you need to switch folders! <br>Reminder of file structure:
+ ```bash
+|- gym-duckietown
+|   |- manual_control.py
+|   |- ...other files ...
+|- maps
+|   |- rider_map.yaml 
+|   |- copy_custom_maps.py
+|   |- ...other maps ...
+
+ ```
 
 When starting the manual control script, the map can be selected via the `--map-name` option, e.g.:
 ```bash
 python3 manual_control.py --env-name Duckietown-udem1-v0 --map-name YOURMAPNAME
 ```
 Make sure you pass only the name, the .yaml extension is not needed!
-
