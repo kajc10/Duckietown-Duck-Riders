@@ -50,15 +50,20 @@ python3 manual_control.py --env-name Duckietown-udem1-v0
 ```
 <br>
 
-## Loading custom map
+## Loading custom maps
 Unique maps can be written/generated and then used with the duckietown-gym simulator.
 We prepared a test map and placed it at [/maps](/maps) .
 
-Custom maps have to be copied to the installed packages. 
-After placing your map into the [/maps](/maps) folder, you can carry out the copying process by running the `copy_custom_maps.py` script. It copies all .yaml files from the folder to the destinations.
+These custom maps have to be copied to the installed packages. 
+After placing your map into the [/maps](/maps) folder, you can carry out the copying process by running the `copy_custom_maps.py` script:
+```bash
+python3 copy_custom_maps.py
+```
+ It copies all .yaml files from the folder to the destinations.
 
-When starting the python script, the map can be selected via the `--map-name` option, e.g.:
+When starting the manual control script, the map can be selected via the `--map-name` option, e.g.:
 ```bash
 python3 manual_control.py --env-name Duckietown-udem1-v0 --map-name YOURMAPNAME
 ```
 Make sure you pass only the name, the .yaml extension is not needed!
+
