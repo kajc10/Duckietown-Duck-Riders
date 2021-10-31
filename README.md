@@ -76,3 +76,5 @@ When starting the manual control script, the map can be selected via the `--map-
 python3 manual_control.py --env-name Duckietown-udem1-v0 --map-name YOURMAPNAME
 ```
 Make sure you pass only the name, the .yaml extension is not needed!
+
+Note: For the map generation we used the [duckietown/map-utils](https://github.com/duckietown/map-utils) repository. The `tile_size` had to be added to the last row manually.
