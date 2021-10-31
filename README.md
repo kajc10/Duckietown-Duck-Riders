@@ -77,4 +77,4 @@ python3 manual_control.py --env-name Duckietown-udem1-v0 --map-name YOURMAPNAME
 ```
 Make sure you pass only the name, the .yaml extension is not needed!
 
-Note: For the map generation we used the [duckietown/map-utils](https://github.com/duckietown/map-utils) repository. The `tile_size` had to be added to the last row manually.
+Note: For the map generation we used the [duckietown/map-utils](https://github.com/duckietown/map-utils) repository. The `tile_size` had to be added to the last row manually. We are aware of the possibility of writing .yaml files manually, but for the current milestone we favourized the generator.
