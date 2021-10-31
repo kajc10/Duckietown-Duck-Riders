@@ -29,8 +29,11 @@ RUN apt-get update -y && apt-get install -y  \
     rm -rf /var/lib/apt/lists/*
     
 #copy gym-duckietown to container   |  #git clone https://github.com/duckietown/gym-duckietown.git #cd gym-duckietown
+WORKDIR /home/duckie
+COPY gym-duckietown/. gym-duckietown
+COPY maps/. maps
+
 WORKDIR /home/duckie/gym-duckietown
-COPY gym-duckietown/. .
 RUN pip3 install -e .
 
 #some versions were not compatible...
