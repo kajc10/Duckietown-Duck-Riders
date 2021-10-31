@@ -63,11 +63,11 @@ python3 copy_custom_maps.py
  ```bash
 |- gym-duckietown
 |   |- manual_control.py
-|   |- ...other files ...
+|   |- ... other files ...
 |- maps
 |   |- rider_map.yaml 
 |   |- copy_custom_maps.py
-|   |- ...other maps ...
+|   |- ... other maps ...
 
  ```
 
