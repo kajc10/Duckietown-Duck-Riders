@@ -1,7 +1,8 @@
 # Duckietown-Duck-Riders
 This repository contains our group project for course VITMAV45.
 
-## Milestone 1 : run manual_control.py
+## <b>Milestone 1</b>
+## Running manual_control.py
 
 **Option1: clone this repository and run manually**
 <br>Note that several dependencies need to be installed on your system:<br> [Python 3.6+, OpenAI gym, NumPy, Pyglet, PyYAML,cloudpickle, PyTorch]
@@ -16,6 +17,7 @@ python3 manual_control.py --env-name Duckietown-udem1-v0
 <br>
 
 **Option2: pull our docker image from Docker-Hub**
+<br>The necessary dependencies are installed in this image.
 ```bash
 docker pull kajc10/duck-riders
 docker run -it duck-riders bash
@@ -46,3 +48,17 @@ To run manual control (as described before) :
 Xvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset &> xvfb.log & export DISPLAY=:0
 python3 manual_control.py --env-name Duckietown-udem1-v0
 ```
+<br>
+
+## Loading custom map
+Unique maps can be written/generated and then used with the duckietown-gym simulator.
+We prepared a test map and placed it at [/maps](/maps) .
+
+Custom maps have to be copied to the installed packages. 
+After placing your map into the [/maps](/maps) folder, you can carry out the copying process by running the `copy_custom_maps.py` script. It copies all .yaml files from the folder to the destinations.
+
+When starting the python script, the map can be selected via the `--map-name` option, e.g.:
+```bash
+python3 manual_control.py --env-name Duckietown-udem1-v0 --map-name YOURMAPNAME
+```
+Make sure you pass only the name, the .yaml extension is not needed!
