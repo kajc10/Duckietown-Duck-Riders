@@ -20,7 +20,7 @@ python3 manual_control.py --env-name Duckietown-udem1-v0
 <br>The necessary dependencies are installed in this image.
 ```bash
 docker pull kajc10/duck-riders:v1.0
-docker run -it duck-riders bash
+docker run -it kajc10/duck-riders:v1.0 bash
 ```
 Due to docker, a virtual display has to be created:
 ```bash
