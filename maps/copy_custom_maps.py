@@ -18,4 +18,3 @@ duckietownworld_maps_path = duckietownworld_path.joinpath('data', 'gd1', 'maps')
 
 copy_custom_maps(mymaps_path, gym_maps_path)
 copy_custom_maps(mymaps_path, duckietownworld_maps_path)
-
