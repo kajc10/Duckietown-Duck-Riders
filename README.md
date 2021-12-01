@@ -44,7 +44,7 @@ python3 train_PPO.py
 
 
 ## <del><b>Milestone 1</b></del>
->Note: folder structure has been reorganized for Ms2.
+>### Note: folder structure has been reorganized for MS2. The following commands are no longer working for the current version as described. New documentation is coming soon...
 ## Running manual_control.py
 
 **Option1: clone this repository and run manually**
