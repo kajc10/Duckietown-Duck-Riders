@@ -1,7 +1,50 @@
 # Duckietown-Duck-Riders
-This repository contains our group project for course VITMAV45.
+This repository contains our group project for course VITMAV45.  
+**Tasks:**
+- train autonomous driving agents in simulation
+- test them on real hardware
 
-## <b>Milestone 1</b>
+Some files were copied/derived from the official Gym-Duckietown repository: https://github.com/duckietown/gym-duckietown  
+More info about the official Duckietown project: https://www.duckietown.org/  
+Documentations: https://docs.duckietown.org/daffy/
+
+
+## <b>Milestone 2</b> 
+## Training our model
+For the training we decided to use the [Ray](https://docs.ray.io/en/latest/) framework.
+>**Ray** provides a simple, universal API for building distributed applications.
+
+It is packaged with other libraries for accelerating machine learning workloads, of which we used [RLlib](https://docs.ray.io/en/latest/rllib.html) and [Tune](https://docs.ray.io/en/master/tune/index.html).
+
+>**RLlib** is an industry-grade library for reinforcement learning (RL), built on top of Ray. It offers both high scalability and a unified API for a variety of applications.
+
+>**Tune** is a Python library for experiment execution and hyperparameter tuning at any scale.
+
+
+List of available algorithms: https://docs.ray.io/en/latest/rllib-toc.html#algorithms
+
+Other helpful links: https://www.anyscale.com/blog/an-introduction-to-reinforcement-learning-with-openai-gym-rllib-and-google
+
+Before running...  
+Install extra dependencies:
+```bash
+pip install -U ray[tune]  # installs Ray + dependencies for Ray Tune
+pip install -U ray[rllib]  # installs Ray + dependencies for Ray RLlib
+```
+
+new files:
+- `wrappers.py`
+- `train_PPO.py`
+
+Commands:
+```bash
+cd Duckietown-Duck-Riders
+python3 train_PPO.py
+```
+
+
+## <del><b>Milestone 1</b></del>
+>Note: folder structure has been reorganized for Ms2.
 ## Running manual_control.py
 
 **Option1: clone this repository and run manually**
