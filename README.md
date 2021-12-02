@@ -19,7 +19,7 @@ cd Duckietown-Duck-Riders
 pip3 install -e .
 ```
 
-## Training our model
+## Training our model (not optimized yet)
 For the training we decided to use the [Ray](https://docs.ray.io/en/latest/) framework.
 >**Ray** provides a simple, universal API for building distributed applications.
 
@@ -40,7 +40,7 @@ See more at:  https://docs.ray.io/en/latest/rllib-models.html
 
 Before running, extra dependencies need to be installed:
 ```bash
-pip install -U ray[tune]  # installs Ray + dependencies for Ray Tune
+pip install -U ray[tune]   # installs Ray + dependencies for Ray Tune
 pip install -U ray[rllib]  # installs Ray + dependencies for Ray RLlib
 ```
 
@@ -57,10 +57,14 @@ python3 manual_control.py --env-name Duckietown-udem1-v0
 new files:
 - `wrappers.py`
 - `train_PPO.py`
+- `test.py` - during training there was still a slight problem with a wrapper, so instead of using calculated action, only steps with a sample.
+Also checkpoint file was hardcoded...
 
-## <del><b>Milestone 1</b>
->### Note: folder structure has been reorganized for MS2. The following commands are no longer working for the current version as described. New documentation is coming soon...
-## Running manual_control.py
+## <del> <b>Milestone 1</b>
+
+## <del>Running manual_control.py
+:warning: Warning!!
+Folder structure has been reorganized for MS2. The following commands are no longer working for the current version as described. New documentation is coming soon...
 
 **Option1: clone this repository and run manually**
 <br>Note that several dependencies need to be installed on your system:<br> [Python 3.6+, OpenAI gym, NumPy, Pyglet, PyYAML,cloudpickle, PyTorch]
@@ -110,6 +114,8 @@ python3 manual_control.py --env-name Duckietown-udem1-v0
 
 
 ## Loading custom maps
+:green_heart: Updated for MS2.
+
 Unique maps can be written/generated and then used with the duckietown-gym simulator.
 We prepared a test map and placed it at [/maps](/maps) .
 
@@ -120,13 +126,16 @@ python3 copy_custom_maps.py
 ```
  It copies all .yaml files from the folder to the destinations. Note that you need to switch folders! <br>Reminder of file structure:
  ```bash
-|- gym-duckietown
+|-  .
 |   |- manual_control.py
+|   |- train_PPO.py
+|   |- setup.py
 |   |- ... other files ...
 |- maps
 |   |- rider_map.yaml 
 |   |- copy_custom_maps.py
 |   |- ... other maps ...
+| other_folders ...
 
  ```
 
