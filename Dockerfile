@@ -1,3 +1,7 @@
+############################
+# modified for milestone 2 #
+############################
+
 FROM nvidia/cuda:11.4.2-cudnn8-runtime-ubuntu20.04
 
 # to skip questions/dialogs during apt-get install
@@ -25,15 +29,23 @@ RUN apt-get update -y && apt-get install -y  \
     nano \
     xvfb \
     libfontconfig1 \
+    ray[tune]\
+    ray[rllib]\
     && \
     rm -rf /var/lib/apt/lists/*
     
-#copy gym-duckietown and maps to container   |  #git clone https://github.com/duckietown/gym-duckietown.git #cd gym-duckietown
-WORKDIR /home/duckie
-COPY gym-duckietown/. gym-duckietown
+#copy everything to container   |  #git clone https://github.com/duckietown/gym-duckietown.git #cd gym-duckietown
+WORKDIR /home/duckie/Duckietown-Duck-Riders
+COPY src/. src
 COPY maps/. maps
+COPY dump/. dump
+COPY setup.py .
+COPY train_PPO.py .
+COPY wrapper.py .
+COPY manual_control.py .
 
-WORKDIR /home/duckie/gym-duckietown
+
+WORKDIR /home/duckie/Duckietown-Duck-Riders
 RUN pip3 install -e .
 
 #some versions were not compatible...
