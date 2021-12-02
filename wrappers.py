@@ -12,23 +12,31 @@ These wrappers are from the original gym-duckietown repo with slight modificatio
 class ResizeWrapper(gym.ObservationWrapper):
     '''
     Original observation images have shape: (480,640,3)
+    New shape: ,,No default configuration for obs shape [X, Y, 3], you must specify `conv_filters` manually as a model option. 
+    		  Default configurations are only available for  inputs of shape [42, 42, K] and [84, 84, K]. 
+    		  You may alternatively want to use a custom model or preprocessor. "
+    For simplicity the default (84,84,K) shape was chosen...
     '''
-    def __init__(self, env=None, shape=(120, 160, 3)):
+    def __init__(self, env=None, shape=(84, 84, 3)):
         super(ResizeWrapper, self).__init__(env)
         self.shape = shape
         self.observation_space = spaces.Box(
             self.observation_space.low[0, 0, 0],
             self.observation_space.high[0, 0, 0],
-            shape,
-            dtype=self.observation_space.dtype,
+            self.shape,
+            dtype=self.observation_space.dtype
         )
         
     #https://github.com/raghakot/keras-vis/issues/209
     def observation(self, observation):
         return np.array(Image.fromarray(obj=observation).resize(size=self.shape[:2]))
+
 	
 
 class NormalizeWrapper(gym.ObservationWrapper):
+    '''
+    Observations to 0-1
+    '''
     def __init__(self, env=None):
         super(NormalizeWrapper, self).__init__(env)
         self.obs_lo = self.observation_space.low[0, 0, 0]
@@ -43,8 +51,10 @@ class NormalizeWrapper(gym.ObservationWrapper):
             return (obs - self.obs_lo) / (self.obs_hi - self.obs_lo)
             
 
-# this is needed because at max speed the duckie can't turn anymore
 class ActionWrapper(gym.ActionWrapper):
+    '''
+    Needed because at max speed the duckie can't turn anymore
+    '''
     def __init__(self, env):
         super(ActionWrapper, self).__init__(env)
 
@@ -68,6 +78,9 @@ class ImgWrapper(gym.ObservationWrapper):
 
 
 class DtRewardWrapper(gym.RewardWrapper):
+    '''
+    
+    '''
     def __init__(self, env):
         super(DtRewardWrapper, self).__init__(env)
 

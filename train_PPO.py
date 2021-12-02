@@ -48,14 +48,12 @@ def prepare_env(env_config):
 		camera_height=camera_height,
 	)
 	
-	#env = ResizeWrapper(env)
-	#env = NormalizeWrapper(env)
-	#env = ImgWrapper(env)     #160x120x3 into 3x160x120
-	#env = ActionWrapper(env)  #max 80% speed
-	#env = DtRewardWrapper(env)
-	#env = gym.make("CartPole-v0")
-	
-	#env = gym.make("CartPole-v0")
+	env = ResizeWrapper(env)
+	env = NormalizeWrapper(env)
+	#env = ImgWrapper(env) 
+	env = ActionWrapper(env)  #max 80% speed
+	env = DtRewardWrapper(env)
+
 	return env
 
 
@@ -72,10 +70,21 @@ ray.init(
 	log_to_driver=False,
 )
 
+#Tune config
+#Rlib uses built-in models if a custom one is not specified.
+#(built-on ones can be modified via config as well)  https://docs.ray.io/en/latest/rllib-models.html
 parameter_search_analysis = ray.tune.run(
 	PPOTrainer,
-	config={"env": "myenv",
-		"framework": "torch"
+	
+	#Trainer (algorithm) config
+	config={
+		"env": "myenv",         
+		"framework": "torch",
+
+		#Model config
+		"model": {
+			"fcnet_activation": "relu"
+		}
 	},
 	stop={'timesteps_total': max_steps},
 	num_samples=1,
@@ -87,6 +96,5 @@ print(
 	"Best hyperparameters found:",
 	parameter_search_analysis.best_config,
 )
-
 
 
