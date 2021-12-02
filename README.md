@@ -10,6 +10,15 @@ Documentations: https://docs.duckietown.org/daffy/
 
 
 ## <b>Milestone 2</b> 
+
+## Initial instructions
+For testing, clone this repository and install the neccessary dependencies by issuing the following commands:
+```bash
+git clone https://github.com/kajc10/Duckietown-Duck-Riders
+cd Duckietown-Duck-Riders
+pip3 install -e .
+```
+
 ## Training our model
 For the training we decided to use the [Ray](https://docs.ray.io/en/latest/) framework.
 >**Ray** provides a simple, universal API for building distributed applications.
@@ -25,25 +34,31 @@ List of available algorithms: https://docs.ray.io/en/latest/rllib-toc.html#algor
 
 Other helpful links: https://www.anyscale.com/blog/an-introduction-to-reinforcement-learning-with-openai-gym-rllib-and-google
 
-Before running...  
-Install extra dependencies:
+
+For Milestone 2, an RLlib built-in model was used. It can be modified via config, or a custom one can be created as well.
+See more at:  https://docs.ray.io/en/latest/rllib-models.html
+
+Before running, extra dependencies need to be installed:
 ```bash
 pip install -U ray[tune]  # installs Ray + dependencies for Ray Tune
 pip install -U ray[rllib]  # installs Ray + dependencies for Ray RLlib
 ```
 
+Commands:
+```bash
+cd Duckietown-Duck-Riders
+
+#Run train
+python3 train_PPO.py
+
+#Run manual control
+python3 manual_control.py --env-name Duckietown-udem1-v0
+```
 new files:
 - `wrappers.py`
 - `train_PPO.py`
 
-Commands:
-```bash
-cd Duckietown-Duck-Riders
-python3 train_PPO.py
-```
-
-
-## <del><b>Milestone 1</b></del>
+## <del><b>Milestone 1</b>
 >### Note: folder structure has been reorganized for MS2. The following commands are no longer working for the current version as described. New documentation is coming soon...
 ## Running manual_control.py
 
@@ -92,6 +107,7 @@ Xvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset &> xvfb.log & 
 python3 manual_control.py --env-name Duckietown-udem1-v0
 ```
 <br>
+
 
 ## Loading custom maps
 Unique maps can be written/generated and then used with the duckietown-gym simulator.
