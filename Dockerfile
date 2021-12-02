@@ -41,6 +41,7 @@ COPY maps/. maps
 COPY dump/. dump
 COPY setup.py .
 COPY train_PPO.py .
+COPY test.py .
 COPY wrapper.py .
 COPY manual_control.py .
 
