@@ -17,6 +17,7 @@ from ray.rllib import _register_all
 from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper
 from ray.tune.integration.wandb import WandbLogger
 import time
+import sys
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -31,6 +32,11 @@ camera_height =  480
 checkpoint_path = './dump'
 training_name = '2021_12_01_1'
 
+if len(sys.argv)!=0:
+	checkpoint_file = sys.argv[0]
+else:
+	checkpoint_file = './dump/PPO_learning/PPO_myenv_526f1_00000_0_2021-12-02_22-17-58/checkpoint_000001/checkpoint-1'
+	#./dump/PPO_learning/PPO_myenv_2c509_00000_0_2021-12-05_21-44-42/checkpoint_000002/checkpoint-2
 
 def prepare_env(env_config):
 	env = Simulator(
@@ -64,6 +70,7 @@ trainer_config = {
 }
 
 model = PPOTrainer(config=trainer_config, env="myenv")
+#model.restore('./dump/PPO_learning/PPO_myenv_526f1_00000_0_2021-12-02_22-17-58/checkpoint_000001/checkpoint-1')
 model.restore('./dump/PPO_learning/PPO_myenv_526f1_00000_0_2021-12-02_22-17-58/checkpoint_000001/checkpoint-1')
 
 
@@ -86,14 +93,12 @@ env = DtRewardWrapper(env)
 # predicing actions and stepping with them
 obs = env.reset()
 for step in range(30):
-	action, _= model.compute_single_action(obs)
+	action,_,_= model.compute_single_action(observation=obs,full_fetch=True)
 	print('ACTION computed: ',action)
-	observation, reward, done, info = env.step(env.action_space.sample())
-	#observation, reward, done, info = env.step(action)
+	observation, reward, done, info = env.step(action)
 	print('NEW: ',observation, reward, done, info)
 	
 	env.render()
-	time.sleep(0.5)
+	time.sleep(0.25)
 env.close()
-
 
