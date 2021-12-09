@@ -42,8 +42,9 @@ COPY dump/. dump
 COPY setup.py .
 COPY train_PPO.py .
 COPY test.py .
-COPY wrapper.py .
+COPY wrappers.py .
 COPY manual_control.py .
+COPY best_trial_checkpoint_path.txt .
 
 
 WORKDIR /home/duckie/Duckietown-Duck-Riders
