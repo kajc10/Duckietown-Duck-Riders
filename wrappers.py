@@ -3,6 +3,7 @@ from gym import spaces
 import numpy as np
 from PIL import Image
 from gym_duckietown.simulator import Simulator
+from gym_duckietown.simulator import NotInLane
 
 
 '''
@@ -83,13 +84,53 @@ class DtRewardWrapper(gym.RewardWrapper):
     '''
     def __init__(self, env):
         super(DtRewardWrapper, self).__init__(env)
+        self.prev_pos = None
 
     def reward(self, reward):
-        if reward == -1000:
-            reward = -10
-        elif reward > 0:
-            reward += 10
-        else:
-            reward += 4
-
-        return reward
+        my_reward = 0
+        
+        #Gettin current position and stored for later
+        pos = self.cur_pos
+        angle = self.cur_angle
+        prev_pos = self.prev_pos
+        self.prev_pos = pos
+        
+        if prev_pos is None:
+            return my_reward
+        
+        #Compute travelled distance
+        curve_point, curve_tangent = self.closest_curve_point(pos, angle)
+        prev_curve_point, prev_curve_tangent = self.closest_curve_point(prev_pos, angle)
+        travelled_dist = np.linalg.norm(curve_point - prev_curve_point)
+        
+        #Compute lane position relative to the center of the rigth lane
+        lane_pos = self.get_lane_pos2(pos, self.cur_angle)
+        
+        if lane_pos is NotInLane:
+                print("Not In Lane")
+                return my_reward
+        
+        #Compute reward
+        #if the agent leaves the right lane: center of the road + agent width/2 =  -0.105 + 0.13/2 = -0.04
+        if lane_pos.dist < -0.04:
+        	print("Not In Good Lane")
+        	return my_reward
+        
+        if np.dot(curve_tangent, curve_point - prev_curve_point) < 0:
+            print("Moving backward")
+            return my_reward
+	
+	#maximum travelled distance = maximum speed*timestep = 1.2*1/30 = 0.04
+        travelled_dist_reward = np.interp(travelled_dist, (0, 0.04), (0,1))
+        lane_center_dist_reward = np.interp(np.abs(lane_pos.dist), (0, 0.04), (1, 0))
+        lane_center_angle_reward = np.interp(np.abs(lane_pos.angle_deg), (0, 30), (1,0))
+	
+        W1 = 1
+        W2 = 1
+        W3 = 1
+        my_reward = (W1*travelled_dist_reward + W2*lane_center_dist_reward + W3*lane_center_angle_reward)/3 
+       
+        print("Travelled_dist: ", travelled_dist_reward)
+        print("Center_dist: ", lane_center_dist_reward)
+        print("Angle: ", lane_center_angle_reward)
+        return my_reward
