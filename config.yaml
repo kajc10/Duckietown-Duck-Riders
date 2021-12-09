@@ -1,0 +1,17 @@
+# An unique identifier for the head node and workers of this cluster.
+cluster_name: duckriders
+
+max_workers: 16
+
+docker:
+    image: "papbence07/af2614a35ce1:latest"
+    container_name: "duckriders_container"
+    #pull_before_run: True
+
+
+# Cloud-provider specific configuration.
+provider:
+    type: aws
+    region: us-west-2
+auth:
+    ssh_user: ubuntu
