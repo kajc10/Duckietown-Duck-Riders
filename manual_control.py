@@ -15,6 +15,7 @@ import pyglet
 from pyglet.window import key
 
 from gym_duckietown.envs import DuckietownEnv
+from wrappers import DtRewardWrapper 
 
 # from experiments.utils import save_img
 
@@ -45,6 +46,7 @@ if args.env_name and args.env_name.find("Duckietown") != -1:
     )
 else:
     env = gym.make(args.env_name)
+env = DtRewardWrapper(env)
 
 env.reset()
 env.render()
