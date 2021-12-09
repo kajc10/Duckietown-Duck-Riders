@@ -56,6 +56,9 @@ RUN pip3 install py-multihash==0.2.0
 RUN pip3 install pillow==8.3.2
 RUN pip3 install numpy==1.18.0
 
+RUN pip3 pip install -U "ray[rllib]"
+RUN pip3 install -U "ray[tune]"
+
 RUN python3 --version
 #RUN python3 -c "from gym_duckietown import *"
 
