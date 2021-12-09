@@ -13,21 +13,29 @@ from ray.rllib.agents.impala import ImpalaTrainer
 from ray.tune.registry import register_env
 from ray.tune.logger import TBXLogger
 from ray.rllib import _register_all
+from ray.tune.trial import Trial 
 
 from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper
+import argparse
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--seed", default=10, type=int)
+parser.add_argument("--map_name", default='udem1', type=str)
+parser.add_argument("--max_steps", default=3, type=int)
+parser.add_argument("--training_name", default='Training_results', type=str)
+args = parser.parse_args()
 
-seed = 10
-map_name      =  'udem1'
-max_steps     =  3
+seed = args.seed
+map_name      =  args.map_name
+max_steps     =  args.max_steps
 domain_rand   =  False
 camera_width  =  640
 camera_height =  480
-checkpoint_path = './dump'
-training_name = '2021_12_01_1'
+checkpoint_path = "./dump"
+training_name = args.training_name
 
 
 #https://docs.ray.io/en/latest/rllib-env.html
@@ -75,7 +83,7 @@ ray.init(
 #(built-on ones can be modified via config as well)  https://docs.ray.io/en/latest/rllib-models.html
 parameter_search_analysis = ray.tune.run(
 	PPOTrainer,
-	
+	name=training_name,
 	#Trainer (algorithm) config
 	config={
 		"env": "myenv",         
@@ -90,6 +98,11 @@ parameter_search_analysis = ray.tune.run(
 	num_samples=1,
 	metric="timesteps_total",
 	mode="min",
+       checkpoint_at_end=True,
+       local_dir="./dump",
+       keep_checkpoints_num=1,
+       checkpoint_score_attr="episode_reward_mean",
+       checkpoint_freq=1,
 )
 
 print(
@@ -97,4 +110,8 @@ print(
 	parameter_search_analysis.best_config,
 )
 
+checkpoint_path = parameter_search_analysis.best_checkpoint
 
+f = open("best_trial_checkpoint_path.txt", "w")
+f.write(str(checkpoint_path))
+f.close()
