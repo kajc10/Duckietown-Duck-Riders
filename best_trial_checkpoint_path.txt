@@ -1,0 +1,1 @@
+/home/szpap/Duckietown-Duck-Riders/dump/2021_12_01_1/PPO_myenv_dfef7_00000_0_2021-12-09_19-36-08/checkpoint_000001/checkpoint-1
