@@ -11,21 +11,25 @@ import ray
 from ray.rllib.agents.ppo import PPOTrainer
 from ray.rllib.agents.impala import ImpalaTrainer
 from ray.tune.registry import register_env
-from ray.tune.logger import TBXLogger
+from ray.tune.logger import TBXLoggerCallback
 from ray.rllib import _register_all
 from ray.tune.trial import Trial 
 
-from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper
+from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper, CropWrapper
 import argparse
+
+#from Logger import TensorboardImageLogger
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--seed", default=10, type=int)
-parser.add_argument("--map_name", default='udem1', type=str)
-parser.add_argument("--max_steps", default=3, type=int)
+parser.add_argument("--map_name", default='small_loop', type=str)
+parser.add_argument("--max_steps", default=1000000, type=int)
 parser.add_argument("--training_name", default='Training_results', type=str)
+parser.add_argument("--num_cpus", default=11, type=int)
+parser.add_argument("--num_gpus", default=2, type=int)
 args = parser.parse_args()
 
 seed = args.seed
@@ -36,7 +40,6 @@ camera_width  =  640
 camera_height =  480
 checkpoint_path = "./dump"
 training_name = args.training_name
-
 
 #https://docs.ray.io/en/latest/rllib-env.html
 #simply passing env as an argument won't work..
@@ -56,6 +59,7 @@ def prepare_env(env_config):
 		camera_height=camera_height,
 	)
 	
+	env = CropWrapper(env)
 	env = ResizeWrapper(env)
 	env = NormalizeWrapper(env)
 	#env = ImgWrapper(env) 
@@ -72,11 +76,14 @@ register_env("myenv", prepare_env)
 ray.shutdown()
 
 ray.init(
-	num_cpus=3,
+	num_cpus=args.num_cpus,
+	num_gpus=args.num_gpus,
 	include_dashboard=False,
 	ignore_reinit_error=True,
 	log_to_driver=False,
 )
+
+#print(ray.get_gpu_ids())
 
 #Tune config
 #Rlib uses built-in models if a custom one is not specified.
@@ -92,17 +99,30 @@ parameter_search_analysis = ray.tune.run(
 		#Model config
 		"model": {
 			"fcnet_activation": "relu"
-		}
+		},
+
+		"env_config": {
+			"accepted_start_angle_deg": 5,
+		},
+
+        	"num_workers": args.num_cpus - 1,
+        	"num_gpus": args.num_gpus,
+		"train_batch_size": ray.tune.choice([2048,4096]),
+		"gamma": 0.99, #impact of past events. e.g. event 5 steps before-> gamma^5*reward
+		"lr": ray.tune.loguniform(0.0001, 5e-6), #https://medium.com/aureliantactics/ppo-hyperparameters-and-ranges-6fc2d29bccbe
+		"sgd_minibatch_size": ray.tune.choice([128,256]),
+		"lambda": 0.95, 
 	},
 	stop={'timesteps_total': max_steps},
+	#stop={'training_iteration': 300},
 	num_samples=1,
-	metric="timesteps_total",
-	mode="min",
-       checkpoint_at_end=True,
-       local_dir="./dump",
-       keep_checkpoints_num=1,
-       checkpoint_score_attr="episode_reward_mean",
-       checkpoint_freq=1,
+	metric="episode_reward_mean",
+	mode="max",
+        checkpoint_at_end=True,
+        local_dir="./dump",
+        keep_checkpoints_num=2,
+        checkpoint_score_attr="episode_reward_mean",
+        checkpoint_freq=1,
 )
 
 print(
