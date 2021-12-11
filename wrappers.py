@@ -101,6 +101,9 @@ class DtRewardWrapper(gym.RewardWrapper):
         #Compute travelled distance
         curve_point, curve_tangent = self.closest_curve_point(pos, angle)
         prev_curve_point, prev_curve_tangent = self.closest_curve_point(prev_pos, angle)
+        if curve_point is None or prev_curve_point is None:
+        	return my_reward
+        
         travelled_dist = np.linalg.norm(curve_point - prev_curve_point)
         
         #Compute lane position relative to the center of the rigth lane
@@ -121,16 +124,36 @@ class DtRewardWrapper(gym.RewardWrapper):
             return my_reward
 	
 	#maximum travelled distance = maximum speed*timestep = 1.2*1/30 = 0.04
-        travelled_dist_reward = np.interp(travelled_dist, (0, 0.04), (0,1))
+        travelled_dist_reward = np.interp(travelled_dist, (0, 0.01), (0,1))
         lane_center_dist_reward = np.interp(np.abs(lane_pos.dist), (0, 0.04), (1, 0))
-        lane_center_angle_reward = np.interp(np.abs(lane_pos.angle_deg), (0, 30), (1,0))
+        lane_center_angle_reward = np.interp(np.abs(lane_pos.angle_deg), (0, 45), (1,0))
 	
-        W1 = 1
+        W1 = 5
         W2 = 1
         W3 = 1
-        my_reward = (W1*travelled_dist_reward + W2*lane_center_dist_reward + W3*lane_center_angle_reward)/3 
+        my_reward = (W1*travelled_dist_reward + W2*lane_center_dist_reward + W3*lane_center_angle_reward)/(W1+W2+W3)
        
         print("Travelled_dist: ", travelled_dist_reward)
         print("Center_dist: ", lane_center_dist_reward)
         print("Angle: ", lane_center_angle_reward)
         return my_reward
+        
+        
+class CropWrapper(gym.ObservationWrapper):
+	'''
+	crop `amount` part from image top
+	'''
+	def __init__(self, env, amount=0.3):
+		super(CropWrapper, self).__init__(env)
+		self.amount = amount
+		self.obs_shape = self.observation_space.shape #HxWxD
+		self.observation_space = spaces.Box(
+			self.observation_space.low[0, 0, 0],
+			self.observation_space.high[0, 0, 0],
+			shape=(int(self.obs_shape[0] * (1-self.amount)), self.obs_shape[1], self.obs_shape[2]),
+			dtype=self.observation_space.dtype
+		)
+		
+	def observation(self, obs):
+		obs = obs[0:int(self.obs_shape[0]*(1-self.amount)),:,:]
+		return obs.astype(np.uint8)
