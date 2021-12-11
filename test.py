@@ -14,7 +14,7 @@ from ray.tune.registry import register_env
 from ray.tune.logger import TBXLogger
 from ray.rllib import _register_all
 
-from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper
+from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper, CropWrapper
 from ray.tune.integration.wandb import WandbLogger
 import time
 import sys
@@ -26,7 +26,7 @@ logger.setLevel(logging.DEBUG)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--seed", default=10, type=int)
-parser.add_argument("--map_name", default='udem1', type=str)
+parser.add_argument("--map_name", default='small_loop', type=str)
 parser.add_argument("--max_steps", default=500, type=int)
 parser.add_argument("--training_name", default='Training_results', type=str)
 args = parser.parse_args()
@@ -50,6 +50,7 @@ def prepare_env(env_config):
 		camera_height=camera_height,
 	)
 	
+	env = CropWrapper(env)
 	env = ResizeWrapper(env)
 	env = NormalizeWrapper(env)
 	env = ActionWrapper(env)  #max 80% speed
@@ -68,7 +69,10 @@ trainer_config = {
 	#Model config
 		"model": {
 		"fcnet_activation": "relu"
-	}
+	},
+	"env_config": {
+			"accepted_start_angle_deg": 5,
+		},
 }
 
 f = open("best_trial_checkpoint_path.txt", "r")
@@ -87,6 +91,7 @@ env = Simulator(
 	camera_height=camera_height,
 )
 
+env = CropWrapper(env)
 env = ResizeWrapper(env)
 env = NormalizeWrapper(env)
 env = ActionWrapper(env)  #max 80% speed
