@@ -69,6 +69,7 @@ Run Test:
 python3 test.py --env-name Duckietown-udem1-v0
 ```
 
+<br>
 
 ### **Option2: pull our docker image from Docker-Hub**  
 Most of the necessary dependencies are installed in this image,
