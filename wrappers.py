@@ -155,5 +155,5 @@ class CropWrapper(gym.ObservationWrapper):
 		)
 		
 	def observation(self, obs):
-		obs = obs[0:int(self.obs_shape[0]*(1-self.amount)),:,:]
+		obs = obs[int(self.obs_shape[0]*(self.amount)):self.obs_shape[0],:,:]
 		return obs.astype(np.uint8)
