@@ -13,7 +13,6 @@ Some files were copied/derived from the official [Gym-Duckietown repository](htt
 ## **Project summary:**  
 The task was to train autonomous driving agents in simulation, that later can be tested on real hardware as well. We used the Gym-Duckietown Simulator - which is built on top of Open AI Gym - provided by the official Duckietown project.
 
-<br>
 
 ## Training
 For the training we decided to use the [Ray](https://docs.ray.io/en/latest/) framework.  
@@ -27,13 +26,9 @@ It is packaged with other libraries for accelerating machine learning workloads,
 
 RLlib comes with built-in NN models (that can be customized), but an algorithm for the training had to be chosen.  
 Based on comparisions, we opted for **Proximal Policy Optimization** [(PPO)](https://docs.ray.io/en/latest/rllib-algorithms.html#ppo).
-<br>
-<br>
 
 ## Testing
 The trained model can be easily tested with the help of the Simulator. Given any observation (image), the trained agent can compute the best `action` from the action space. In our case we need 2 values - velocity of left and right motors. Then the environment's `step` function can be called with the computed action passed as an argument. As the action is executed, the environment returns the next observation and this process continues.. The env's `render` function makes the self-driving agent visible.
-
-<br>
 
 ## Wrappers
 Wrappers are quite important, since they allow us  to add functionality to environments - modify rewards, observations etc.
@@ -41,8 +36,6 @@ We used the original gym_duckietown wrappers with slight modifications for basic
 In addition, we prepared 2 custom wrappers:
 - CropWrapper - crops the sky from images
 - DtRewardWrapper - feeds agent with custom reward, based on several aspects like speed, heading angle and position in line
-
-<br>
 
 ## Files
 - `src/`  - contains the simulator
@@ -54,12 +47,10 @@ In addition, we prepared 2 custom wrappers:
 - `dump/` - checkpoints are dumped here
 - `maps/` - custom maps are placed here
 
-<br>
-
 ## Instructions
 There are 2 options available for testing our repository.
 
-**Option1: clone this repository**  
+### **Option1: clone this repository**  
 Issue the following commands:
 ```bash
 git clone https://github.com/kajc10/Duckietown-Duck-Riders
@@ -77,9 +68,9 @@ Run Test:
 ```bash
 python3 test.py --env-name Duckietown-udem1-v0
 ```
-<br>
 
-**Option2: pull our docker image from Docker-Hub**  
+
+### **Option2: pull our docker image from Docker-Hub**  
 Most of the necessary dependencies are installed in this image,
 but to run training on GPUs, you will need to install cuda.
 ```bash
@@ -91,14 +82,11 @@ Due to docker, a virtual display has to be created:
 Xvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset &> xvfb.log & export DISPLAY=:0
 ```
 
-
 For the case you want to build a new image, a Dockerfile is provided!
-
-<br>
 
 
 ## Additional features
-**Loading custom maps**  
+### **Loading custom maps**  
 
 Unique maps can be written/generated and then used with the duckietown-gym simulator.
 We prepared a test map and placed it at [/maps](/maps) .
@@ -135,5 +123,5 @@ Video of our running custom map: https://youtu.be/sgJBtslqAe0
 
 <br>
 
-**Modified manual_control.py**   
+### **Modified manual_control.py**   
 To test our reward wrapper, we modified the original `manual_control.py` so that it always shows the current reward. Thanks to this, we recognized that at first, moving forward was not rewarded enough, that's why the duckie was just rotating in one place.
