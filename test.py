@@ -100,13 +100,13 @@ env = DtRewardWrapper(env)
 # predicing actions and stepping with them
 obs = env.reset()
 
-for step in range(500):
-	action,_,_= model.compute_single_action(observation=obs,full_fetch=True)
-	print('ACTION computed: ',action)
-	observation, reward, done, info = env.step(action)
-	print('NEW: ',observation, reward, done, info)
-	print('REWARD: ', reward)
-	
-	env.render()
-	time.sleep(0.25)
+for i in range(5):
+        obs = env.reset()
+        env.render()
+        done = False
+        while not done:
+            action = model.compute_action(obs, explore=False)
+            obs, reward, done, info = env.step(action)
+            env.render()
+            time.sleep(0.01)
 env.close()
