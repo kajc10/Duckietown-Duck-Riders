@@ -9,6 +9,7 @@ Pelenczei Bálint - C4QFEY
 This repository contains our group project for course VITMAV45.  
 Some files were copied/derived from the official [Gym-Duckietown repository](https://github.com/duckietown/gym-duckietown)
 
+![Duckieee](./docs/first_try.gif)
 
 ## **Project summary:**  
 The task was to train autonomous driving agents in simulation, that later can be tested on real hardware as well. We used the Gym-Duckietown Simulator - which is built on top of Open AI Gym - provided by the official Duckietown project.
