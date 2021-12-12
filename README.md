@@ -2,7 +2,7 @@
 ```
 authors:
 Bozsó Katica     - ZE5BJ7  
-Pap Bence        -  
+Pap Bence        - VEJP2J
 Pelenczei Bálint - C4QFEY
 ```
 
