@@ -128,7 +128,7 @@ class DtRewardWrapper(gym.RewardWrapper):
         lane_center_dist_reward = np.interp(np.abs(lane_pos.dist), (0, 0.04), (1, 0))
         lane_center_angle_reward = np.interp(np.abs(lane_pos.angle_deg), (0, 45), (1,0))
 	
-        W1 = 5
+        W1 = 50
         W2 = 1
         W3 = 1
         my_reward = (W1*travelled_dist_reward + W2*lane_center_dist_reward + W3*lane_center_angle_reward)/(W1+W2+W3)
