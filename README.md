@@ -3,7 +3,7 @@
 authors:
 Bozsó Katica     - ZE5BJ7  
 Pap Bence        -  
-Pelenczei Bálint - 
+Pelenczei Bálint - C4QFEY
 ```
 
 This repository contains our group project for course VITMAV45.  
