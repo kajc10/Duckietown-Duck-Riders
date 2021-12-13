@@ -157,19 +157,3 @@ class CropWrapper(gym.ObservationWrapper):
 	def observation(self, obs):
 		obs = obs[int(self.obs_shape[0]*(self.amount)):self.obs_shape[0],:,:]
 		return obs.astype(np.uint8)
-
-
-class GrayscaleWrapper(gym.ObservationWrapper):
-    def __init__(self, env=None):
-        super(GrayscaleWrapper, self).__init__(env)
-
-        self.observation_space = spaces.Box(
-            self.observation_space.low[0, 0, 0],
-            self.observation_space.high[0, 0, 0],
-            (self.observation_space.shape[0], self.observation_space.shape[1], 1),
-            dtype=self.observation_space.dtype)
-
-    def observation(self, obs):
-        obs = Image.open(obs).convert('L')
-        obs = np.expand_dims(obs, 2)
-        return obs
