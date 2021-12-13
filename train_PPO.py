@@ -15,7 +15,7 @@ from ray.tune.logger import TBXLoggerCallback
 from ray.rllib import _register_all
 from ray.tune.trial import Trial 
 
-from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper, CropWrapper
+from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper, CropWrapper, GrayscaleWrapper
 import argparse
 
 #from Logger import TensorboardImageLogger
@@ -60,6 +60,7 @@ def prepare_env(env_config):
 	)
 	
 	env = CropWrapper(env)
+	env = GrayscaleWrapper(env)
 	env = ResizeWrapper(env)
 	env = NormalizeWrapper(env)
 	#env = ImgWrapper(env) 
