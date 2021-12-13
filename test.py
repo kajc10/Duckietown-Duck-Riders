@@ -21,6 +21,8 @@ import sys
 
 import argparse
 
+from load_checkpoint import load_checkpoint_path
+
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
@@ -29,6 +31,8 @@ parser.add_argument("--seed", default=10, type=int)
 parser.add_argument("--map_name", default='small_loop', type=str)
 parser.add_argument("--max_steps", default=500, type=int)
 parser.add_argument("--training_name", default='Training_results', type=str)
+parser.add_argument("--model_name", default='', type=str)
+parser.add_argument("--load", default='./dump', type=str)
 args = parser.parse_args()
 
 seed = args.seed
@@ -39,6 +43,7 @@ camera_width  =  640
 camera_height =  480
 checkpoint_path = './dump'
 training_name = args.training_name
+model_name = args.model_name
 
 def prepare_env(env_config):
 	env = Simulator(
@@ -76,12 +81,19 @@ trainer_config = {
 		},
 }
 
-f = open("best_trial_checkpoint_path.txt", "r")
-chechpoint_path = f.readline()
-f.close()
+#f = open("best_trial_checkpoint_path.txt", "r")
+#chechpoint_path = f.readline()
+#f.close()
 
 model = PPOTrainer(config=trainer_config, env="myenv")
-model.restore = checkpoint_path
+
+path = checkpoint_path + '/' + args.training_name
+
+if model_name:
+	path = path+ '/' + args.model_name
+
+checkpoint_path = load_checkpoint_path(path)
+model.restore(checkpoint_path)
 
 env = Simulator(
 	seed=seed,
