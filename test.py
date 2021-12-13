@@ -14,7 +14,7 @@ from ray.tune.registry import register_env
 from ray.tune.logger import TBXLogger
 from ray.rllib import _register_all
 
-from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper, CropWrapper
+from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper, CropWrapper, GreyscaleWrapper
 from ray.tune.integration.wandb import WandbLogger
 import time
 import sys
@@ -51,6 +51,7 @@ def prepare_env(env_config):
 	)
 	
 	env = CropWrapper(env)
+	env = GrayscaleWrapper(env)
 	env = ResizeWrapper(env)
 	env = NormalizeWrapper(env)
 	env = ActionWrapper(env)  #max 80% speed
@@ -92,6 +93,7 @@ env = Simulator(
 )
 
 env = CropWrapper(env)
+env = GrayscaleWrapper(env)
 env = ResizeWrapper(env)
 env = NormalizeWrapper(env)
 env = ActionWrapper(env)  #max 80% speed
