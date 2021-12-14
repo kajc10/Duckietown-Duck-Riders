@@ -36,6 +36,11 @@ install_requires = [
     f"duckietown-world-{line}",
     "PyGeometry-z6",
     "carnivalmirror==0.6.2",
+    
+    "tensorboard",
+    "torchvision"
+    "ray[tune]",
+    "ray[rllib]"
 ]
 
 system_version = tuple(sys.version_info)[:3]

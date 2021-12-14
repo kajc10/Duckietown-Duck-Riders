@@ -14,7 +14,7 @@ from ray.tune.registry import register_env
 from ray.tune.logger import TBXLogger
 from ray.rllib import _register_all
 
-from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper, CropWrapper, GreyscaleWrapper
+from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper, CropWrapper
 from ray.tune.integration.wandb import WandbLogger
 import time
 import sys
@@ -31,7 +31,7 @@ parser.add_argument("--seed", default=10, type=int)
 parser.add_argument("--map_name", default='small_loop', type=str)
 parser.add_argument("--max_steps", default=500, type=int)
 parser.add_argument("--training_name", default='Training_results', type=str)
-parser.add_argument("--model_name", default='', type=str)
+parser.add_argument("--checkpoint_folder", default='', type=str)
 parser.add_argument("--load", default='./dump', type=str)
 args = parser.parse_args()
 
@@ -43,7 +43,7 @@ camera_width  =  640
 camera_height =  480
 checkpoint_path = './dump'
 training_name = args.training_name
-model_name = args.model_name
+checkpoint_folder = args.checkpoint_folder
 
 def prepare_env(env_config):
 	env = Simulator(
@@ -56,7 +56,6 @@ def prepare_env(env_config):
 	)
 	
 	env = CropWrapper(env)
-	env = GrayscaleWrapper(env)
 	env = ResizeWrapper(env)
 	env = NormalizeWrapper(env)
 	env = ActionWrapper(env)  #max 80% speed
@@ -89,8 +88,8 @@ model = PPOTrainer(config=trainer_config, env="myenv")
 
 path = checkpoint_path + '/' + args.training_name
 
-if model_name:
-	path = path+ '/' + args.model_name
+if checkpoint_folder:
+	path = path+ '/' + args.checkpoint_folder
 
 checkpoint_path = load_checkpoint_path(path)
 model.restore(checkpoint_path)
@@ -105,7 +104,6 @@ env = Simulator(
 )
 
 env = CropWrapper(env)
-env = GrayscaleWrapper(env)
 env = ResizeWrapper(env)
 env = NormalizeWrapper(env)
 env = ActionWrapper(env)  #max 80% speed

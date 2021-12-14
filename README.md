@@ -40,7 +40,7 @@ In addition, we prepared 2 custom wrappers:
 
 ## Files
 - `src/`  - contains the simulator
-- `train_PPO.py` - training agent with PPO algorithm
+- `train_PPO.py, train_A2C.py, train_DDPG.py` - training agent with different algorithms
 - `test.py`  - stepping th env with trained agent
 - `manual_control.py` - manually driving (modified for plotting reward)
 - `wrappers.py` - to modify env's obs' and rewards
@@ -56,18 +56,36 @@ Issue the following commands:
 ```bash
 git clone https://github.com/kajc10/Duckietown-Duck-Riders
 cd Duckietown-Duck-Riders
-pip3 install -e . #install gym dependencies
-```
-Note that several dependencies need to be installed on your system:<br> [Python 3.6+, OpenAI gym, NumPy, Pyglet, PyYAML,cloudpickle, PyTorch]  
-Find these in requirements.txt  
-Install them via command:
-```bash
-#TODO
+pip3 install -e . #install dependencies
 ```
 
-Run Test:
+Run training with either:
+- `train_PPO.py`
+- `train_A2C.py`
+- `train_DDPG.py`  
+
+:warning:Make sure you use the following options correctly unless the training won't work!
+- `--num_cpus` - according to your system
+- `--num_gpus` - according to your system  
+
+Other less important arguments:
+- `--seed` - place random seed
+- `--map_name` -  mapname without .yaml extension
+- `--max_steps` - until the simulation stops
+- `--training_name` - output folder (default is Training_results)
+
+Example for full command:
 ```bash
-python3 test.py --env-name Duckietown-udem1-v0
+python3 train_PPO.py --num_gpus 0 --num_cpus 3 --map_name small_loop
+```
+
+
+Run test:  
+You can test your trained models or others' if you place checkpoint file in a folder to [./dump/Training_results](/dump/Training_r_esults). E.g. */dump/Training_results/best_model1/checkpoint_000116*  
+The folder of the model should be given as argument.
+Also a map name can be passed.
+```bash
+python3 test.py --map_name small_loop --checkpoint_folder bestmodel --model_name A2C
 ```
 
 <br>

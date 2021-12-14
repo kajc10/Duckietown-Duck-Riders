@@ -31,6 +31,8 @@ RUN apt-get update -y && apt-get install -y  \
     libfontconfig1 \
     ray[tune]\
     ray[rllib]\
+    torchvision\
+    tensorboard\
     && \
     rm -rf /var/lib/apt/lists/*
     
