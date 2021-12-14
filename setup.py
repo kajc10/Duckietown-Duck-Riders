@@ -38,7 +38,7 @@ install_requires = [
     "carnivalmirror==0.6.2",
     
     "tensorboard",
-    "torchvision"
+    "torchvision",
     "ray[tune]",
     "ray[rllib]"
 ]
