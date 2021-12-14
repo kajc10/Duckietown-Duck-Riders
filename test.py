@@ -16,7 +16,6 @@ from ray.tune.logger import TBXLogger
 from ray.rllib import _register_all
 
 from wrappers import ResizeWrapper,NormalizeWrapper, ImgWrapper, DtRewardWrapper, ActionWrapper, CropWrapper
-from ray.tune.integration.wandb import WandbLogger
 import time
 import sys
 
