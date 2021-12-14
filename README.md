@@ -7,7 +7,7 @@ Pelenczei Bálint - C4QFEY
 ```
 
 This repository contains our group project for course VITMAV45.  
-Link for presentation: https://youtu.be/1Ffxj0AKjDA
+Link for presentation: https://youtu.be/1Ffxj0AKjDA  
 Some files were copied/derived from the official [Gym-Duckietown repository](https://github.com/duckietown/gym-duckietown)
 
 ![Duckieee](./docs/first_try.gif)
