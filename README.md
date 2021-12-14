@@ -87,7 +87,7 @@ You can test your trained models or others' if you place checkpoint file in a fo
 The folder of the model should be given as argument.
 Also a map name can be passed.
 ```bash
-python3 test.py --map_name small_loop --checkpoint_folder bestmodel --model_name ppo
+python3 test.py --map_name small_loop --checkpoint_folder best_model --model_name ppo
 ```
 
 <br>
