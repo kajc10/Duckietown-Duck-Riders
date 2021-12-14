@@ -131,7 +131,7 @@ class DtRewardWrapper(gym.RewardWrapper):
         W1 = 300
         W2 = 1
         W3 = 1
-        my_reward = W1*travelled_dist + W2*lane_center_dist_reward + W3*lane_center_angle_reward)
+        my_reward = W1*travelled_dist + W2*lane_center_dist_reward + W3*lane_center_angle_reward
        
         print("Travelled_dist: ", travelled_dist*W1)
         print("Center_dist: ", lane_center_dist_reward*W2)
