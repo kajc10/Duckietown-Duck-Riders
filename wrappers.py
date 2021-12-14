@@ -123,19 +123,19 @@ class DtRewardWrapper(gym.RewardWrapper):
             print("Moving backward")
             return my_reward
 	
-	#maximum travelled distance = maximum speed*timestep = 1.2*1/30 = 0.04
-        travelled_dist_reward = np.interp(travelled_dist, (0, 0.01), (0,1))
+	#maximum travelled distance = maximum speed*timestep = 0.3*1/30 = 0.04
+        #travelled_dist_reward = np.interp(travelled_dist, (0, 0.01), (0,1))
         lane_center_dist_reward = np.interp(np.abs(lane_pos.dist), (0, 0.04), (1, 0))
-        lane_center_angle_reward = np.interp(np.abs(lane_pos.angle_deg), (0, 45), (1,0))
+        lane_center_angle_reward = np.interp(np.abs(lane_pos.angle_deg), (0, 15), (1,0))
 	
-        W1 = 50
+        W1 = 300
         W2 = 1
         W3 = 1
-        my_reward = (W1*travelled_dist_reward + W2*lane_center_dist_reward + W3*lane_center_angle_reward)/(W1+W2+W3)
+        my_reward = W1*travelled_dist + W2*lane_center_dist_reward + W3*lane_center_angle_reward)
        
-        print("Travelled_dist: ", travelled_dist_reward)
-        print("Center_dist: ", lane_center_dist_reward)
-        print("Angle: ", lane_center_angle_reward)
+        print("Travelled_dist: ", travelled_dist*W1)
+        print("Center_dist: ", lane_center_dist_reward*W2)
+        print("Angle: ", lane_center_angle_reward*W3)
         return my_reward
         
         
