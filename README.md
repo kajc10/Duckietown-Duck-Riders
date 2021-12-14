@@ -83,11 +83,11 @@ python3 train.py --mode ppo --num_cpus 3 --num_gpus 0 --seed 10 --map_name small
 
 
 Run test:  
-You can test your trained models or others' if you place checkpoint file in a folder to [./dump/Training_results](/dump/Training_r_esults). E.g. */dump/Training_results/best_model1/checkpoint_000116*  
+You can test your trained models or others' if you place checkpoint file in a folder to [./dump/Training_results](/dump/Training_r_esults). E.g. */dump/Training_results/best_model/checkpoint_000245*  
 The folder of the model should be given as argument.
 Also a map name can be passed.
 ```bash
-python3 test.py --map_name small_loop --checkpoint_folder bestmodel --model_name A2C
+python3 test.py --map_name small_loop --checkpoint_folder bestmodel --model_name ppo
 ```
 
 <br>
