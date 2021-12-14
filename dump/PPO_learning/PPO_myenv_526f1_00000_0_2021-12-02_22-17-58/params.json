@@ -1,7 +1,0 @@
-{
-  "env": "myenv",
-  "framework": "torch",
-  "model": {
-    "fcnet_activation": "relu"
-  }
-}

@@ -58,7 +58,7 @@ Issue the following commands:
 git clone https://github.com/kajc10/Duckietown-Duck-Riders
 cd Duckietown-Duck-Riders
 pip3 install -e . #install dependencies
-```
+```  
 
 Run training with:
 - `train.py` 
@@ -106,6 +106,8 @@ Xvfb :0 -screen 0 1024x768x24 -ac +extension GLX +render -noreset &> xvfb.log & 
 
 For the case you want to build a new image, a Dockerfile is provided!
 
+Run the commands specified in **option 1**.
+Note that you might start your command with `RAY_OBJECT_STORE_ALLOW_SLOW_STORAGE=1` . Also, if you are using the image through ssh, make sure you use `nohup`, so in case of network error the script won't terminate.
 
 ## Additional features
 ### **Loading custom maps**  
