@@ -40,10 +40,11 @@ In addition, we prepared 2 custom wrappers:
 
 ## Files
 - `src/`  - contains the simulator
-- `train_PPO.py, train_A2C.py, train_DDPG.py` - training agent with different algorithms
-- `test.py`  - stepping th env with trained agent
+- `train.py` - training setup
+- `trainers.py` - different training agents and their hyperparameter setup
+- `test.py`  - for testing the trained agent
 - `manual_control.py` - manually driving (modified for plotting reward)
-- `wrappers.py` - to modify env's obs' and rewards
+- `wrappers.py` - to modify env's observation and rewards
 - `setup.sh`  - for installing gym dependencies
 - `dump/` - checkpoints are dumped here
 - `maps/` - custom maps are placed here
@@ -59,24 +60,25 @@ cd Duckietown-Duck-Riders
 pip3 install -e . #install dependencies
 ```
 
-Run training with either:
-- `train_PPO.py`
-- `train_A2C.py`
-- `train_DDPG.py`  
+Run training with:
+- `train.py` 
+and specify which algorithm to use with:
+- `--mode [algorithm]` - algorithm_name can either be `ddpg`, `ppo` or `a2c`
+
 
 :warning:Make sure you use the following options correctly unless the training won't work!
 - `--num_cpus` - according to your system
 - `--num_gpus` - according to your system  
 
 Other less important arguments:
-- `--seed` - place random seed
-- `--map_name` -  mapname without .yaml extension
-- `--max_steps` - until the simulation stops
+- `--seed` - place random seed (default is 10)
+- `--map_name` -  mapname without .yaml extension (default is small_loop)
+- `--max_steps` - until the simulation stops (default is 2000000)
 - `--training_name` - output folder (default is Training_results)
 
 Example for full command:
 ```bash
-python3 train_PPO.py --num_gpus 0 --num_cpus 3 --map_name small_loop
+python3 train.py --mode ppo --num_cpus 3 --num_gpus 0 --seed 10 --map_name small_loop --max_steps 2000000 --training_name Training_results
 ```
 
 
@@ -124,7 +126,8 @@ python3 copy_custom_maps.py
 |   |- setup.py
 |   |- ... other files ...
 |- maps
-|   |- rider_map.yaml 
+|   |- rider_map.yaml
+|   |- ETHZ_autolab_technical_track.yaml
 |   |- copy_custom_maps.py
 |   |- ... other maps ...
 | other_folders ...
@@ -133,7 +136,7 @@ python3 copy_custom_maps.py
 
 When starting the manual control script, the map can be selected via the `--map-name` option, e.g.:
 ```bash
-python3 manual_control.py --env-name Duckietown-udem1-v0 --map-name rider_map
+python3 manual_control.py --map-name rider_map
 ```
 Make sure you pass only the name, the .yaml extension is not needed!
 
@@ -144,4 +147,4 @@ Video of our running custom map: https://youtu.be/sgJBtslqAe0
 <br>
 
 ### **Modified manual_control.py**   
-To test our reward wrapper, we modified the original `manual_control.py` so that it always shows the current reward. Thanks to this, we recognized that at first, moving forward was not rewarded enough, that's why the duckie was just rotating in one place.
+To test our reward wrapper, we modified the original `manual_control.py` so that it always shows the current reward thus we are able to check the actual rewards during a manual testing.
