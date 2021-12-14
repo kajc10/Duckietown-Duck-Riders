@@ -6,7 +6,8 @@ Pap Bence        - VEJP2J
 Pelenczei Bálint - C4QFEY
 ```
 
-This repository contains our group project for course VITMAV45.  
+This repository contains our group project for course VITMAV45.
+Link for presentation: https://bit.ly/3yq5Dxj
 Some files were copied/derived from the official [Gym-Duckietown repository](https://github.com/duckietown/gym-duckietown)
 
 ![Duckieee](./docs/first_try.gif)
