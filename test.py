@@ -9,7 +9,8 @@ from datetime import datetime
 import logging
 import ray
 from ray.rllib.agents.ppo import PPOTrainer
-from ray.rllib.agents.impala import ImpalaTrainer
+from ray.rllib.agents.a3c import A2CTrainer
+from ray.rllib.agents.ddpg import DDPGTrainer
 from ray.tune.registry import register_env
 from ray.tune.logger import TBXLogger
 from ray.rllib import _register_all
@@ -33,6 +34,7 @@ parser.add_argument("--max_steps", default=500, type=int)
 parser.add_argument("--training_name", default='Training_results', type=str)
 parser.add_argument("--checkpoint_folder", default='', type=str)
 parser.add_argument("--load", default='./dump', type=str)
+parser.add_argument("--mode", default='ppo', type=str)
 args = parser.parse_args()
 
 seed = args.seed
@@ -44,6 +46,7 @@ camera_height =  480
 checkpoint_path = './dump'
 training_name = args.training_name
 checkpoint_folder = args.checkpoint_folder
+mode = args.mode
 
 def prepare_env(env_config):
 	env = Simulator(
@@ -83,8 +86,15 @@ trainer_config = {
 #f = open("best_trial_checkpoint_path.txt", "r")
 #chechpoint_path = f.readline()
 #f.close()
-
-model = PPOTrainer(config=trainer_config, env="myenv")
+if mode == 'ddpg':
+	print('====DDPG====')
+	model = DDPGTrainer(config=trainer_config, env="myenv")
+if mode == 'a2c':
+	print('====A2C====')
+	model = A2CTrainer(config=trainer_config, env="myenv")
+else:
+	print('====PPO====')
+	model = PPOTrainer(config=trainer_config, env="myenv")
 
 path = checkpoint_path + '/' + args.training_name
 
