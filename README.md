@@ -63,7 +63,7 @@ pip3 install -e . #install dependencies
 Run training with:
 - `train.py` 
 and specify which algorithm to use with:
-- `--mode [algorithm]` - algorithm_name can either be `ddpg`, `ppo` or `a2c`
+- `--mode [algorithm]` - `[algorithm]` can either be `ddpg`, `ppo` or `a2c` (default is ppo)
 
 
 :warning:Make sure you use the following options correctly unless the training won't work!
