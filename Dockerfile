@@ -31,8 +31,8 @@ RUN apt-get update -y && apt-get install -y  \
     libfontconfig1 \
     ray[tune]\
     ray[rllib]\
-    torchvision\
-    tensorboard\
+    #torchvision\
+    #tensorboard\
     && \
     rm -rf /var/lib/apt/lists/*
     
@@ -42,9 +42,11 @@ COPY src/. src
 COPY maps/. maps
 COPY dump/. dump
 COPY setup.py .
-COPY train_PPO.py .
+COPY trainers.py .
+COPY train.py .
 COPY test.py .
 COPY wrappers.py .
+COPY load_checkpoint.py .
 COPY manual_control.py .
 COPY best_trial_checkpoint_path.txt .
 
